@@ -68,10 +68,10 @@ fi
 mencoder -msglevel all=0 mf://"$inpath/*.jpg" -mf w=704:h=480:fps=10:type=jpg -ovc lavc -lavcopts vcodec=mpeg4:v4mv:mbd=2:trell -oac copy -o "$outpath/$ymd.avi" > /dev/null 2>&1
 # 2. Produce mp4 version with ffmpeg
 ffmpeg -y -i "$outpath/$ymd.avi" -vcodec mpeg4 -b 1200kb -mbd 2 "$outpath/$ymd.mp4" > /dev/null 2>&1
-# 3. Produce ogg version with ffmpeg
-ffmpeg -y -i "$outpath/$ymd.avi" -b 1200kb -mbd 2 "$outpath/$ymd.ogg" > /dev/null 2>&1
+# 3. Produce ogv version with ffmpeg
+ffmpeg -y -i "$outpath/$ymd.avi" -b 1200kb -mbd 2 "$outpath/$ymd.ogv" > /dev/null 2>&1
 # 4. Copy movies for web publication
 cp "$outpath/$ymd.mp4" "$homepath/htdocs/assets/media/sky/yesterday.mp4"
-cp "$outpath/$ymd.ogg" "$homepath/htdocs/assets/media/sky/yesterday.ogv"
+cp "$outpath/$ymd.ogv" "$homepath/htdocs/assets/media/sky/yesterday.ogv"
 
 ## End of script
