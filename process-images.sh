@@ -19,6 +19,7 @@
 # This script should run every minute of the day, ideally launched by cron
 
 debugmode=false
+testmode=false
 while getopts ":htd" flag
 do
  case $flag in

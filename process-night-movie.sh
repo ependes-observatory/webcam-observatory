@@ -15,6 +15,7 @@
 # Script running duration : depends of night duration, typically 1 to 2 minutes.
 
 debugmode=false
+testmode=false
 while getopts ":htd" flag
 do
  case $flag in

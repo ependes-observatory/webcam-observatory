@@ -14,6 +14,7 @@
 # Script running duration : about 50 seconds for 1440 images
 
 debugmode=false
+testmode=false
 while getopts ":htd" flag
 do
  case $flag in
