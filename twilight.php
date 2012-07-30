@@ -24,7 +24,10 @@
 $lat = 46.762333;    // North
 $long = 7.139444;    // East
 // Set timezone if not defined
-date_default_timezone_set('Europe/Zurich');
+$ini_tz = ini_get('date.timezone');
+if (empty($ini_tz)) {
+  date_default_timezone_set('Europe/Zurich');
+}
 // Current time
 $timestamp = time();
 
