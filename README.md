@@ -24,18 +24,24 @@ Goals:
 
 ### Scripts
 
+__Warning__ ! These scripts use the syntax of the GNU `date` command (and not the BSD one) for relative dates and do not run on Darwin or FreeBSD.
+
 * `process-images.sh`
 
   Main script, for processing the raw images uploaded by the video server and publishing every minute an actual image of the sky above the observatory. The script should run every minute, ideally via cron. It calls the other scripts when appropriate.
 
 * `process-day-movie.sh`
 
-  Script to process the daily images to produce a timelapse movie of the previous day. Should run every day, minutes after midnight. This script is launched appropriately by process-images.sh.
+  Script to process the daily images to produce a timelapse movie of the previous day. Should run every day, minutes after midnight. This script is launched appropriately by `process-images.sh`.
 
 * `process-night-movie.sh`
 
-  Script to process the daily images to produce a timelapse movie of the previous night, between two consecutive civil twilights. The begin and end civil twilight times are computed by the twilight.php script. Should run every day, after end of civil twilight. At Épendes, running after 08:00 is fine. This script is launched appropriately by process-images.sh.
+  Script to process the daily images to produce a timelapse movie of the previous night, between two consecutive civil twilights. The begin and end civil twilight times are computed by the `twilight.php` script. Should run every day, after end of civil twilight. At Épendes, running after 08:00 is fine. This script is launched appropriately by `process-images.sh`.
+
+* `process-pastnight-movie.sh`
+
+  Script to process the daily images to produce a timelapse movie of a past night, between two consecutive civil twilights. The begin and end civil twilight times are computed by the `twilight.php` script. This should be launched manually, giving a timestamp as a parameter to determine the night for which to produce the movie, e.g. `process-pastnight-movie.sh -t 1341021600`
 
 * `twilight.php`
 
-  Used by process-night-movie.sh to compute begin and end civil twilight times.
+  Used by `process-night-movie.sh` and `process-pastnight-movie.sh` to compute begin and end civil twilight times.
