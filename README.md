@@ -2,7 +2,7 @@
 
 This projects collects some scripts allowing to publish images and movies taken by the webcam of Épendes astronomical observatory, Fribourg, Switzerland.
 
-[http://www.observatoire-observatoire-naef.ch/](http://www.observatoire-observatoire-naef.ch/)
+[http://www.observatoire-naef.ch/](http://www.observatoire-naef.ch/)
 
 ## License
 
