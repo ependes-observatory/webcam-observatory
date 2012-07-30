@@ -13,20 +13,23 @@
 
 /*
 // This script computes the begin and end civil twilight time
-// Usage: php twilight.php
+// Usage: php twilight.php or
+// Usage: php twilight.php --lat=<latitude> --long=<longitude> --timestamp=<unixtimestamp>
 // Output: begin and end civil twilight time in 24-hour format,
 // separated with a space, e.g. 2146 0530
 */
-
-$opts= array("timestamp::", "long::", "lat::");
-$options = getopt("",$opts);
 
 // Default values
 // Localisation: Épendes
 $lat = 46.762333;    // North
 $long = 7.139444;    // East
+// Set timezone if not defined
+date_default_timezone_set('Europe/Zurich');
 // Current time
 $timestamp = time();
+
+$opts= array("timestamp::", "long::", "lat::");
+$options = getopt("",$opts);
 
 // Override default values if parameters are given
 foreach( $options as $key => $value ) {
