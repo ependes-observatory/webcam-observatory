@@ -43,6 +43,12 @@ inpathtoday="$homepath/Documents/sky/$year1/$month1/$day1"
 inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
 outpath="$homepath/htdocs/assets/media/sky/$year1/$month1/"
 
+# Create directory for the day, if not present
+# The test should be true only on the first day of each month
+if [ ! -d "$outpath" ]; then
+  mkdir -p "$outpath"
+fi
+
 # Compute twilight begin and end, with twilight.php script
 twilightbegin=`php $homepath/twilight.php | cut -d ' ' -f 1 | awk '{print $1 + 0}'`
 twilightend=`php $homepath/twilight.php | cut -d ' ' -f 2 | awk '{print $1 + 0}'`
