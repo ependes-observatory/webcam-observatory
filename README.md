@@ -14,7 +14,7 @@ This program is free software; you can redistribute it and/or modify it under th
 
 ### Goals
 
-This project contains 4 scripts to process the images take by the webcam of the Astronomical observatory of Épendes, Fribourg, Switzerland,
+This project contains 5 scripts to process the images taken by the webcam of the Astronomical observatory of Épendes, Fribourg, Switzerland.
 
 Goals:
 
