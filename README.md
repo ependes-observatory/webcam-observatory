@@ -6,7 +6,7 @@ This projects collects some scripts allowing to publish images and movies taken 
 
 ## License
 
-Copyright @ 2012 Nicolas Martignoni <nicolas@martignoni.net>
+Copyright © 2012 Nicolas Martignoni <nicolas@martignoni.net>
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
