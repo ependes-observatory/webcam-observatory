@@ -77,8 +77,12 @@ do
   fi
 done
 
-# 2. Add date/time stamp to image and place it in appropriate location
-convert "$homepath/allskycam/temp_$hm.jpg" -pointsize 18 -fill white \
+# 2. Rescale image oval-shaped image to circular one, crop it, add date/time and orientation stamps
+#    and place it in appropriate location
+convert "$homepath/allskycam/temp_$hm.jpg" \
+  -resize 704x543\! \
+  -gravity South -crop 700x520+0+0\! \
+  -pointsize 18 -fill white \
   -gravity North -annotate 0 "N" \
   -gravity South -annotate 0 "S" \
   -gravity East -annotate 0 "W" \
