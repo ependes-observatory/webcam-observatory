@@ -77,7 +77,7 @@ do
   fi
 done
 
-# 2. Rescale image oval-shaped image to circular one, crop it, add date/time and orientation stamps
+# 2. Rescale oval-shaped image to a circular one, crop it, add date/time and orientation stamps
 #    and place it in appropriate location
 convert "$homepath/allskycam/temp_$hm.jpg" \
   -resize 704x543\! \
