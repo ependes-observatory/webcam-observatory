@@ -77,11 +77,11 @@ do
   fi
 done
 
-# 2. Rescale oval-shaped image to a circular one, crop it, add date/time and orientation stamps
+# 2. Rescale image oval-shaped image to circular one, crop it, add date/time and orientation stamps
 #    and place it in appropriate location
 convert "$homepath/allskycam/temp_$hm.jpg" \
-  -resize 704x543\! \
-  -gravity South -crop 700x520+0+0\! \
+  -resize 704x535\! \
+  -gravity South -crop 700x520+2+0\! \
   -pointsize 18 -fill white \
   -gravity North -annotate 0 "N" \
   -gravity South -annotate 0 "S" \
@@ -105,10 +105,11 @@ rm "$homepath/allskycam/temp_$hm.jpg"
 
 # Launch the script to get IP address of Observatoire d'Épendes, every hour
 # Running every hour at 00:50
-#if [ $minute -eq 49 ]; then
-  #echo "Working :-) adsads" > "$homepath/allskycam/ip.txt"
-  #sh "$homepath/get-ip.sh"
-#fi
+if [ $minute -eq 51 ]; then
+#if [ $hour -eq 22 ]; then
+  # echo "get-ip run at $hour:$minute" >> $homepath/log.txt &
+  sh "$homepath/get-ip.sh" &
+fi
 
 # Launch the daily movie processing script and cleanup, should run after 00:00, the sooner the better
 # Running at 00:06
