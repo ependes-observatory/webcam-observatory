@@ -41,7 +41,7 @@ homepath="/Data/www/ecoles/www.observatoire-naef.ch"
 tmppath="$homepath/allskycam/tmp"
 inpathtoday="$homepath/Documents/sky/$year1/$month1/$day1"
 inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
-outpath="$homepath/htdocs/assets/media/sky/$year1/$month1/"
+outpath="$homepath/Documents/media/sky/$year1/$month1/"
 
 # Create directory for the day, if not present
 # The test should be true only on the first day of each month
@@ -84,11 +84,11 @@ done
 # 1. Create avi movie file with mencoder
 mencoder -msglevel all=0 mf://@"$tmppath/hours.txt" -mf w=704:h=480:fps=10:type=jpg -ovc lavc -lavcopts vcodec=mpeg4:v4mv:mbd=2:trell -oac copy -o "$outpath/$ymd-night.avi" > /dev/null 2>&1
 # 2. Produce mp4 version with ffmpeg
-ffmpeg -y -i "$outpath/$ymd-night.avi" -vcodec mpeg4 -b 1200kb -mbd 2 "$outpath/$ymd-night.mp4" > /dev/null 2>&1
+avconv -y -i "$outpath/$ymd-night.avi" -vcodec mpeg4 -b 1200k -mbd 2 "$outpath/$ymd-night.mp4" > /dev/null 2>&1
 # 3. Produce ogv version with ffmpeg
-ffmpeg -y -i "$outpath/$ymd-night.avi" -b 1200kb -mbd 2 "$outpath/$ymd-night.ogv" > /dev/null 2>&1
+avconv -y -i "$outpath/$ymd-night.avi" -b 1200k -mbd 2 "$outpath/$ymd-night.ogv" > /dev/null 2>&1
 # 4. Copy movies for web publication
-cp "$outpath/$ymd-night.mp4" "$homepath/htdocs/assets/media/sky/lastnight.mp4"
-cp "$outpath/$ymd-night.ogv" "$homepath/htdocs/assets/media/sky/lastnight.ogv"
+cp "$outpath/$ymd-night.mp4" "$homepath/Documents/media/sky/lastnight.mp4"
+cp "$outpath/$ymd-night.ogv" "$homepath/Documents/media/sky/lastnight.ogv"
 
 ## End of script
