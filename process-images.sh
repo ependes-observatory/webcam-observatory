@@ -68,12 +68,12 @@ fi
 while true
 do
   # Test if an upload by user "observatoire" is going on
-  ## if [ "`lsof -a -u observatoire -c proftpd +D $inpath | wc -l`" -gt 0 ]; then  ## This does work only as root :-(
-  if [ "`lsof -a -u observatoire -c proftpd | wc -l`" -gt 0 ]; then
-    sleep 2
-  else
+  ## if [ "`lsof -a -u observatoire -c proftpd +D $inpath | wc -l`" -eq 0 ]; then  ## This does work only as root :-(
+  if [ "`lsof -a -u observatoire -c proftpd | wc -l`" -eq 0 ]; then
     convert -average "$inpath/*.jpg" "$homepath/allskycam/temp_$hm.jpg"
     break
+  else
+    sleep 2
   fi
 done
 
