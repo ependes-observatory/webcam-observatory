@@ -70,9 +70,13 @@ do
   # Test if an upload by user "observatoire" is going on
   ## if [ "`lsof -a -u observatoire -c proftpd +D $inpath | wc -l`" -eq 0 ]; then  ## This does work only as root :-(
   if [ "`lsof -a -u observatoire -c proftpd | wc -l`" -eq 0 ]; then
+  ## if [[ `ls -1U $inpath/*.jpg 2>/dev/null | wc -l` -gt 0 && `fuser -u $inpath 2>/dev/null | wc -c ` -eq 0 ]]; then
+    # there is at least one file in $inpath dir and $inpath is not used by a process (upload is done)
+    # we can then process the files in $inpath
     convert -average "$inpath/*.jpg" "$homepath/allskycam/temp_$hm.jpg"
     break
   else
+    # no upload or upload not completed; we wait a while and retry
     sleep 2
   fi
 done
