@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2012 Nicolas Martignoni <nicolas%martignoni.net>
+# Copyright © 2012 onwards, Nicolas Martignoni <nicolas%martignoni.net>
 #
 # License: This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published by
