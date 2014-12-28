@@ -46,7 +46,7 @@ homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpath="$homepath/allskycam/$ymd/$hour"
 outpath="$homepath/Documents/sky/$year/$month/$day"
-dropboxpath="sky/$year/$month/$day"
+dropboxpath="images/$year/$month/$day"
 
 ## FOR TESTING PURPOSES
 if $testmode ; then # Run only when testing
