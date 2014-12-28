@@ -41,7 +41,8 @@ homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpathtoday="$homepath/Documents/sky/$year1/$month1/$day1"
 inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
-outpath="$homepath/Documents/media/sky/$year1/$month1/"
+outpath="$homepath/Documents/media/sky/$year1/$month1"
+dropboxpath="nightmovies/$year1/$month1"
 
 # Create directory for the day, if not present
 # The test should be true only on the first day of each month
@@ -62,6 +63,8 @@ if $testmode ; then # Run only when not testing
   echo "$outpath"
   echo "$twilightbegin"
   echo "$twilightend"
+  echo bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd-night.mp4" "$dropboxpath/$ymd-night.mp4"
+  exit 0 ## exit without further action
 fi
 
 # Remove previous file with image names, if present
@@ -90,5 +93,7 @@ avconv -y -i "$outpath/$ymd-night.avi" -b 1200k -mbd 2 "$outpath/$ymd-night.ogv"
 # 4. Copy movies for web publication
 cp "$outpath/$ymd-night.mp4" "$homepath/Documents/media/sky/lastnight.mp4"
 cp "$outpath/$ymd-night.ogv" "$homepath/Documents/media/sky/lastnight.ogv"
+# 5. Copy MP4 movie to Dropbox
+bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd-night.mp4" "$dropboxpath/$ymd-night.mp4" &
 
 ## End of script

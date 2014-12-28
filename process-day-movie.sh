@@ -43,7 +43,8 @@ ymd="$year$month$day"
 homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpath="$homepath/Documents/sky/$year/$month/$day"
-outpath="$homepath/Documents/media/sky/$year/$month/"
+outpath="$homepath/Documents/media/sky/$year/$month"
+dropboxpath="daymovies/$year/$month"
 
 ## FOR TESTING PURPOSES
 if $testmode ; then # Run only when not testing
@@ -51,6 +52,9 @@ if $testmode ; then # Run only when not testing
   echo "$tmppath"
   echo "$inpath"
   echo "$outpath"
+  echo "$dropboxpath"
+  echo bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd.mp4" "$dropboxpath/$ymd.mp4"
+  exit 0 ## exit without further action
 fi
 
 # Create directory for the day, if not present
@@ -74,5 +78,7 @@ avconv -y -i "$outpath/$ymd.avi" -b 1200k -mbd 2 "$outpath/$ymd.ogv" > /dev/null
 # 4. Copy movies for web publication
 cp "$outpath/$ymd.mp4" "$homepath/Documents/media/sky/yesterday.mp4"
 cp "$outpath/$ymd.ogv" "$homepath/Documents/media/sky/yesterday.ogv"
+# 5. Copy MP4 movie to Dropbox
+bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd.mp4" "$dropboxpath/$ymd.mp4" &
 
 ## End of script
