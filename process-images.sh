@@ -46,6 +46,7 @@ homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpath="$homepath/allskycam/$ymd/$hour"
 outpath="$homepath/Documents/sky/$year/$month/$day"
+dropboxpath="sky/$year/$month/$day"
 
 ## FOR TESTING PURPOSES
 if $testmode ; then # Run only when testing
@@ -53,6 +54,7 @@ if $testmode ; then # Run only when testing
   echo "$tmppath"
   echo "$inpath"
   echo "$outpath"
+  echo "$dropboxpath"
   exit 0 ## exit without further action
 fi
 
@@ -83,6 +85,7 @@ done
 
 # 2. Rescale oval-shaped image to circular one, crop it, add date/time and orientation stamps
 #    and place it in appropriate location
+# 2.1 First rescale image and copy it
 convert "$homepath/allskycam/temp_$hm.jpg" \
   -resize 704x535\! \
   -gravity South -crop 700x520+2+0\! \
@@ -93,6 +96,9 @@ convert "$homepath/allskycam/temp_$hm.jpg" \
   -gravity West -annotate 0 "E" \
   -gravity NorthEast -undercolor black -annotate 0 "`date --date='1 minute ago' '+%F %R %Z'`" \
   "$outpath/$hm.jpg"
+# 2.2 Second copy it to dropbox, using script "dropbox_uploader" from
+#     https://github.com/andreafabrizi/Dropbox-Uploader
+bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$hm.jpg" "$dropboxpath/$hm.jpg" &
 # 3. Copy image for web publication
 # 3.1 First as latest.jpg
 cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/latest.jpg"
