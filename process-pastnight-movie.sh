@@ -54,7 +54,7 @@ homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpathtoday="$homepath/Documents/sky/$year1/$month1/$day1"
 inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
-outpath="$homepath/Documents/media/sky/$year1/$month1/"
+outpath="$homepath/Documents/media/sky/$year1/$month1"
 
 # Compute twilight begin and end, with twilight.php script
 twilightbegin=`php $homepath/twilight.php --timestamp=$timestamp | cut -d ' ' -f 1 | awk '{print $1 + 0}'`
@@ -94,6 +94,8 @@ mencoder -msglevel all=0 mf://@"$tmppath/hours.txt" -mf w=704:h=480:fps=10:type=
 avconv -y -i "$outpath/$ymd-night.avi" -vcodec mpeg4 -b 1200k -mbd 2 "$outpath/$ymd-night.mp4" > /dev/null 2>&1
 # 3. Produce ogv version with ffmpeg
 avconv -y -i "$outpath/$ymd-night.avi" -b 1200k -mbd 2 "$outpath/$ymd-night.ogv" > /dev/null 2>&1
+# 4. Delete AVI movie file (not needed)
+rm "$outpath/$ymd-night.avi"
 
 exit 0
 ## End of script

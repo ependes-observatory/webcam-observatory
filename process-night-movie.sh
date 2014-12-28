@@ -95,5 +95,7 @@ cp "$outpath/$ymd-night.mp4" "$homepath/Documents/media/sky/lastnight.mp4"
 cp "$outpath/$ymd-night.ogv" "$homepath/Documents/media/sky/lastnight.ogv"
 # 5. Copy MP4 movie to Dropbox
 bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd-night.mp4" "$dropboxpath/$ymd-night.mp4" &
+# 6. Delete AVI movie file (not needed)
+rm "$outpath/$ymd-night.avi"
 
 ## End of script
