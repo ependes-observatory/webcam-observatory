@@ -40,7 +40,7 @@ __Warning__ ! These scripts use the syntax of the GNU `date` command (and not th
 
 * `process-pastnight-movie.sh`
 
-  Script to process the daily images to produce a timelapse movie of a past night, between two consecutive civil twilights. The begin and end civil twilight times are computed by the `twilight.php` script. This should be launched manually, giving a timestamp as a parameter to determine the night for which to produce the movie, e.g. `process-pastnight-movie.sh -t 1341021600`
+  Script to process the daily images to produce a timelapse movie of a specified past night, between two consecutive civil twilights. The begin and end civil twilight times are computed by the `twilight.php` script. This should be launched manually, giving a timestamp as a parameter to determine the night for which to produce the movie, e.g. `process-pastnight-movie.sh -t 1341021600`
 
 * `twilight.php`
 
