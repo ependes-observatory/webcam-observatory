@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 # Copyright 2012 Nicolas Martignoni <nicolas%martignoni.net>
 #
 # License: This program is free software; you can redistribute it and/or
@@ -42,7 +42,7 @@ hm="$hour$minute"
 hm1="$hour1$minute"
 
 # Set paths
-homepath="/Data/www/ecoles/www.observatoire-naef.ch"
+homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpath="$homepath/allskycam/$ymd/$hour"
 outpath="$homepath/Documents/sky/$year/$month/$day"

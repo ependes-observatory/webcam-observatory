@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 # Copyright 2012 Nicolas Martignoni <nicolas%martignoni.net>
 #
 # License: This program is free software; you can redistribute it and/or
@@ -50,7 +50,7 @@ day2=`date -d @$yesterday '+%d'`
 ymd=$year1$month1$day1
 
 # Set paths
-homepath="/Data/www/ecoles/www.observatoire-naef.ch"
+homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpathtoday="$homepath/Documents/sky/$year1/$month1/$day1"
 inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
