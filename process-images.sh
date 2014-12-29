@@ -118,21 +118,21 @@ rm "$homepath/allskycam/temp_$hm.jpg"
 if [ $minute -eq 51 ]; then
 #if [ $hour -eq 22 ]; then
   # echo "get-ip run at $hour:$minute" >> $homepath/log.txt &
-  sh "$homepath/get-ip.sh" &
+  bash "$homepath/get-ip.sh" &
 fi
 
 # Launch the daily movie processing script and cleanup, should run after 00:00, the sooner the better
 # Running at 00:06
 if [ $hour -eq 0 ] && [ $minute -eq 5 ]; then
   # echo "process-day-movie run at $hour:$minute" >> $homepath/log.txt &
-  sh "$homepath/process-day-movie.sh" &
+  bash "$homepath/process-day-movie.sh" &
 fi
 
 # Launch the night movie processing script and cleanup, should run after 08:00, the sooner the better
 # Running at 08:06
 if [ $hour -eq 8 ] && [ $minute -eq 5 ]; then
-  #echo "process-night-movie run at $hour:$minute" >> $homepath/log.txt &
-  sh "$homepath/process-night-movie.sh" &
+  # echo "process-night-movie run at $hour:$minute" >> $homepath/log.txt &
+  bash "$homepath/process-night-movie.sh" &
 fi
 
 ## End of script
