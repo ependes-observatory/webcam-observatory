@@ -106,7 +106,7 @@ cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/latest.jpg"
 # 3.2 Second in lasthour folder
 cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/lasthour/$hm.jpg"
 # 3.3 Remove from lasthour folder files older than one hour
-find "$homepath/htdocs/assets/images/sky/lasthour/" -mmin +60 -exec rm {} \;
+find "$homepath/htdocs/assets/images/sky/lasthour/" -mmin +59 -exec rm {} \;
 # 4. Move uploaded images to tmp location
 find "$inpath" -maxdepth 1 -name "*.jpg" -exec mv {} "$tmppath" \;
 # 5. Delete from tmp location images older than 2 days
