@@ -105,8 +105,8 @@ bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" uplo
 cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/latest.jpg"
 # 3.2 Second in lasthour folder
 cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/lasthour/$hm.jpg"
-# 3.3 Remove oldest file from lasthour folder
-rm "$homepath/htdocs/assets/images/sky/lasthour/$hm1.jpg"
+# 3.3 Remove from lasthour folder files older than one hour
+find "$homepath/htdocs/assets/images/sky/lasthour/" -mmin +60 -exec rm {} \;
 # 4. Move uploaded images to tmp location
 find "$inpath" -maxdepth 1 -name "*.jpg" -exec mv {} "$tmppath" \;
 # 5. Delete from tmp location images older than 2 days
