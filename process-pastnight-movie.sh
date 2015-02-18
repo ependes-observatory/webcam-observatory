@@ -55,6 +55,7 @@ tmppath="$homepath/allskycam/tmp"
 inpathtoday="$homepath/Documents/sky/$year1/$month1/$day1"
 inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
 outpath="$homepath/Documents/media/sky/$year1/$month1"
+dropboxpath="nightmovies/$year1/$month1"
 
 # Compute twilight begin and end, with twilight.php script
 twilightbegin=`php $homepath/twilight.php --timestamp=$timestamp | cut -d ' ' -f 1 | awk '{print $1 + 0}'`
@@ -69,6 +70,8 @@ if $debugmode ; then # Run only when not testing
   echo "$outpath"
   echo "$twilightbegin"
   echo "$twilightend"
+  echo bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd-night.mp4" "$dropboxpath/$ymd-night.mp4"
+  exit 0 ## exit without further action
 fi
 
 # Remove previous file with image names, if present
@@ -94,7 +97,12 @@ mencoder -msglevel all=0 mf://@"$tmppath/hours.txt" -mf w=704:h=480:fps=10:type=
 avconv -y -i "$outpath/$ymd-night.avi" -vcodec mpeg4 -b 1200k -mbd 2 "$outpath/$ymd-night.mp4" > /dev/null 2>&1
 # 3. Produce ogv version with ffmpeg
 avconv -y -i "$outpath/$ymd-night.avi" -b 1200k -mbd 2 "$outpath/$ymd-night.ogv" > /dev/null 2>&1
-# 4. Delete AVI movie file (not needed)
+# 4. Copy movies for web publication
+cp "$outpath/$ymd-night.mp4" "$homepath/Documents/media/sky/lastnight.mp4"
+cp "$outpath/$ymd-night.ogv" "$homepath/Documents/media/sky/lastnight.ogv"
+# 5. Copy MP4 movie to Dropbox
+bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd-night.mp4" "$dropboxpath/$ymd-night.mp4" &
+# 6. Delete AVI movie file (not needed)
 rm "$outpath/$ymd-night.avi"
 
 exit 0
