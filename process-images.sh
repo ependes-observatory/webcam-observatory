@@ -113,6 +113,9 @@ find "$inpath" -maxdepth 1 -name "*.jpg" -exec mv {} "$tmppath" \;
 find "$tmppath" -maxdepth 1 -mtime +2 -name "*.jpg" -exec rm {} \;
 # 6. Remove tmp image
 rm "$homepath/allskycam/temp_$hm.jpg"
+# 7. Remove images older than 60 days, then empty directories, to free space on the server
+find "$homepath/Documents/sky/" -type f -name "*.jpg" -mtime +60 -exec rm {} \;
+find "$homepath/Documents/sky/" -depth -empty -type d -exec rmdir {} \;
 
 # Launch the script to get IP address of Observatoire d'Épendes, every hour
 # Running every hour at 00:50
