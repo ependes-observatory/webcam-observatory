@@ -80,7 +80,11 @@ cp "$outpath/$ymd.mp4" "$homepath/Documents/media/sky/yesterday.mp4"
 cp "$outpath/$ymd.ogv" "$homepath/Documents/media/sky/yesterday.ogv"
 # 5. Copy MP4 movie to Dropbox
 bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" upload "$outpath/$ymd.mp4" "$dropboxpath/$ymd.mp4" &
-# 6. Delete AVI movie file (not needed)
+# 6. Remove AVI movie file (not needed)
 rm "$outpath/$ymd.avi"
+# 7. Remove movies older than 60 days, then empty directories, to free space on the server
+#find "$homepath/Documents/media/sky/" -type f \( -not -name "*-night.mp4" -a -name "*.mp4" \) -mtime +60 -exec rm {} \;
+#find "$homepath/Documents/media/sky/" -type f \( -not -name "*-night.ogv" -a -name "*.ogv" \) -mtime +60 -exec rm {} \;
+find "$homepath/Documents/media/sky/" -depth -empty -type d -exec rmdir {} \;
 
 ## End of script
