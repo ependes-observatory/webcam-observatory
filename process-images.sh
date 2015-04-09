@@ -107,7 +107,7 @@ cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/latest.jpg"
 cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/lasthour/$hm.jpg"
 # 3.3 Remove from lasthour folder files older than one hour
 find "$homepath/htdocs/assets/images/sky/lasthour/" -mmin +59 -exec rm {} \;
-# 4. Move uploaded images to tmp location
+# 4. Move uploaded images to tmp location and remove empty directories
 find "$inpath" -maxdepth 1 -name "*.jpg" -exec mv {} "$tmppath" \;
 # 5. Delete from tmp location images older than 2 days
 find "$tmppath" -maxdepth 1 -mtime +2 -name "*.jpg" -exec rm {} \;
@@ -128,14 +128,14 @@ fi
 # Launch the daily movie processing script and cleanup, should run after 00:00, the sooner the better
 # Running at 00:06
 if [ $hour -eq 0 ] && [ $minute -eq 5 ]; then
-  # echo `date +"%F %T"` "process-day-movie run at $hour:$minute" >> $homepath/log.txt &
+  # echo `date +"%F %T"` "process-day-movie launched" >> $homepath/log.txt &
   bash "$homepath/process-day-movie.sh" &
 fi
 
 # Launch the night movie processing script and cleanup, should run after 08:00, the sooner the better
 # Running at 08:06
 if [ $hour -eq 8 ] && [ $minute -eq 5 ]; then
-  # echo `date +"%F %T"` "process-night-movie run at $hour:$minute" >> $homepath/log.txt &
+  # echo `date +"%F %T"` "process-night-movie launched" >> $homepath/log.txt &
   bash "$homepath/process-night-movie.sh" &
 fi
 
