@@ -46,6 +46,7 @@ homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
 inpath="$homepath/allskycam/$ymd/$hour"
 outpath="$homepath/Documents/sky/$year/$month/$day"
+lasthourpath="$homepath/htdocs/assets/images/sky/lasthour"
 dropboxpath="images/$year/$month/$day"
 
 ## FOR TESTING PURPOSES
@@ -104,9 +105,9 @@ bash "$homepath/dropbox_uploader.sh" -q -f "$homepath/dropbox_uploader.cfg" uplo
 # 3.1 First as latest.jpg
 cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/latest.jpg"
 # 3.2 Second in lasthour folder
-cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/lasthour/$hm.jpg"
+cp "$outpath/$hm.jpg" "$lasthourpath/$hm.jpg"
 # 3.3 Remove from lasthour folder files older than one hour
-find "$homepath/htdocs/assets/images/sky/lasthour/" -mmin +59 -exec rm {} \;
+find "$lasthourpath" -mmin +59 -exec rm {} \;
 # 4. Move uploaded images to tmp location and remove empty directories
 find "$inpath" -maxdepth 1 -name "*.jpg" -exec mv {} "$tmppath" \;
 # 5. Delete from tmp location images older than 2 days
