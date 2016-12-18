@@ -70,9 +70,9 @@ fi
 # 1. Average uploaded images to tmp image for removing noise
 while true
 do
-  # Test if an upload by user "observatoire" is going on
-  ## if [ "`lsof -a -u observatoire -c proftpd +D $inpath | wc -l`" -gt 0 ]; then  ## This does work only as root :-(
-  if [ "`lsof -a -u observatoire -c proftpd | wc -l`" -gt 0 ]; then
+  # Test if an upload by user "observatoire" is going on and wait until done
+  ## if [ "`lsof -a -u observatoire -c proftpd +D $inpath | wc -l`" -eq 0 ]; then  ## This does work only as root :-(
+  if [ "`lsof -a -u observatoire -c proftpd | wc -l`" -eq 0 ]; then
   ## if [[ `ls -1U $inpath/*.jpg 2>/dev/null | wc -l` -gt 0 && `fuser -u $inpath 2>/dev/null | wc -c ` -eq 0 ]]; then
     # there is at least one file in $inpath dir and $inpath is not used by a process (upload is done)
     # we can then process the files in $inpath
