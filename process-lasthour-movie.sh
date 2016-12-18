@@ -24,6 +24,10 @@ do
  esac
 done
 
+hour=`date --date="61 minute ago" '+%H'`
+minute=`date --date="1 minute ago" '+%M'`
+hm="$hour$minute"
+
 # Set paths
 homepath="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmppath="$homepath/allskycam/tmp"
@@ -34,17 +38,16 @@ lasthourpath="$homepath/htdocs/assets/images/sky/lasthour"
 if $testmode ; then # Run only when not testing
   echo "$homepath"
   echo "$lasthourpath"
+  echo "$hm"
   exit 0 ## exit without further action
 fi
 
 # Create timelapse movie in appropriate location
-# 1. Create avi movie file with mencoder
-mencoder -msglevel all=0 mf://"$lasthourpath/*.jpg" -mf w=704:h=480:fps=10:type=jpg -ovc lavc -lavcopts vcodec=mpeg4:v4mv:mbd=2:trell -oac copy -o "$lasthourpath/lasthour.avi" > /dev/null 2>&1
-# 2. Produce mp4 version with ffmpeg
-avconv -y -i "$lasthourpath/lasthour.avi" -c:v libx264 -b 1200k -mbd 2 "$lasthourpath/lasthour.mp4" > /dev/null 2>&1
-# 3. Produce ogv version with ffmpeg
-avconv -y -i "$lasthourpath/lasthour.avi" -b 1200k -mbd 2 "$lasthourpath/lasthour.ogv" > /dev/null 2>&1
-# 4. Remove avi version
-rm "$lasthourpath/lasthour.avi"
+# 1. Create mp4 movie file with avconv
+#avconv -y -start_number "$hm" -i "$lasthourpath/%04d.jpg" -r 10 -vcodec libx264 -crf 20 -g 5 "$lasthourpath/lasthour.mp4"
+avconv -y -r 10 -i "$lasthourpath/%1d.jpg" -vcodec libx264 -crf 20 -g 5 "$lasthourpath/lasthour.mp4"
+#mencoder -msglevel all=0 mf://"$lasthourpath/*.jpg" -mf w=704:h=480:fps=10:type=jpg -ovc lavc -lavcopts vcodec=mpeg4:v4mv:mbd=2:trell -oac copy -o "$lasthourpath/lasthour.avi" #> /dev/null 2>&1
+# 2. Produce ogv version with ffmpeg
+avconv -y -i "$lasthourpath/lasthour.mp4" -b 1200k -mbd 2 "$lasthourpath/lasthour.ogv" #> /dev/null 2>&1
 
 ## End of script
