@@ -108,6 +108,9 @@ cp "$outpath/$hm.jpg" "$homepath/htdocs/assets/images/sky/latest.jpg"
 cp "$outpath/$hm.jpg" "$lasthourpath/$hm.jpg"
 # 3.3 Remove from lasthour folder files older than one hour
 find "$lasthourpath" -mmin +59 -exec rm {} \;
+# 3.4 Rename jpg files to sequential numbers, based on date
+# http://stackoverflow.com/questions/3211595/renaming-files-in-a-folder-to-sequential-numbers
+ls -tr $lasthourpath/*.jpg | cat -n | while read n f; do mv "$f" "$lasthourpath/$n.jpg"; done
 # 4. Move uploaded images to tmp location and remove empty directories
 find "$inpath" -maxdepth 1 -name "*.jpg" -exec mv {} "$tmppath" \;
 # 5. Delete from tmp location images older than 2 days
