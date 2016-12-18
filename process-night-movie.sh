@@ -44,7 +44,7 @@ inpathyesterday="$homepath/Documents/sky/$year2/$month2/$day2"
 outpath="$homepath/Documents/media/sky/$year1/$month1"
 dropboxpath="nightmovies/$year1/$month1"
 
-# Create directory for the day, if not present
+# Create directory for the month, if not present
 # The test should be true only on the first day of each month
 if [ ! -d "$outpath" ]; then
   mkdir -p "$outpath"
