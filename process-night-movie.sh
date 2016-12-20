@@ -51,8 +51,8 @@ if [ ! -d "$outpath" ]; then
 fi
 
 # Compute twilight begin and end, with twilight.php script
-twilightbegin=`php $homepath/twilight.php | cut -d ' ' -f 1 | awk '{print $1 + 0}'`
-twilightend=`php $homepath/twilight.php | cut -d ' ' -f 2 | awk '{print $1 + 0}'`
+twilightbegin=$(printf "%04d" `php $homepath/twilight.php | cut -d ' ' -f 1 | awk '{print $1 + 0}'`)
+twilightend=$(printf "%04d" `php $homepath/twilight.php | cut -d ' ' -f 2 | awk '{print $1 + 0}'`)
 
 ## FOR TESTING PURPOSES
 if $testmode ; then # Run only when not testing
@@ -68,43 +68,24 @@ if $testmode ; then # Run only when not testing
 fi
 
 # Empty temp directory
-rm -r "$tmppath"/*
-# Empty previous file with image names
-> "$tmppath/hours.txt"
+rm -rf "$tmppath"/*
 
 # Create list of image names to combine and store it in a temp file "hours.txt"
-for (( time=$twilightbegin - 1; time < 2359; )); do
-    time="$(date --date="$time + 1 minutes" +'%H%M')"
-    echo "$inpathyesterday/"`printf "%04d" "$time"`".jpg" >> $tmppath/hours.txt
-done
-for (( time=0; time <= $twilightend; )); do
-    echo "$inpathtoday/"`printf "%04d" "$time"`".jpg" >> $tmppath/hours.txt
-    time=$((10#$time))
-    time="$(date --date="$time + 1 minutes" +'%H%M')"
-    time=$((10#$time))
-done
+# Idea from http://stackoverflow.com/questions/28226229/bash-looping-through-dates
+starttime=$(date -I -d "- 1 day")T${twilightbegin:0:2}:${twilightbegin:2:4}
+endtime=$(date -I)T${twilightend:0:2}:${twilightend:2:4}
 
-# exit 0
+starttime=$(date -Iminutes -d "$starttime") || exit -1
+endtime=$(date -Iminutes -d "$endtime") || exit -1
 
-# for h in `seq $twilightbegin 2359`;
-# do
-#   echo "$inpathyesterday/"`printf "%04d" "$h"`".jpg" >> $tmppath/hours.txt
-# done
-# for h in `seq 0 $twilightend`;
-# do
-#   echo "$inpathtoday/"`printf "%04d" "$h"`".jpg" >> $tmppath/hours.txt
-# done
-
-# Create numbered soft links pointing to image files in source folder
-# Necessary to cope with avconv requirements to process consecutive numbers in file names
+d="$starttime"
 count=0
-while read -r the_filename
-do
+while [ "$d" != "$endtime" ]; do
     new=$(printf "%04d.jpg" $count) # 04 pads to length of 3 max 9999 images
-    ln -s $the_filename $tmppath/$new
-#     echo $tmppath/$new
+    ln -s $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg $tmppath/$new
+    d=$(date -Iminutes -d "$d + 1 minute")
     let count=count+1
-done < "$tmppath/hours.txt"
+done
 
 # Create timelapse movie in appropriate location
 # 1. Create mp4 movie file with avconv
