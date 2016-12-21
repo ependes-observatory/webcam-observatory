@@ -15,13 +15,19 @@
 # Script running duration : depends of night duration, typically 1 to 2 minutes.
 
 debugmode=false
-testmode=false
-while getopts ":htd" flag
+
+while getopts ":hdt" flag
 do
  case $flag in
-  h) echo "help";;
-  d) debugmode=true;; # developing or
-  t) testmode=true;; # testing
+  h)
+    echo "help"
+    ;;
+  d) # developing 
+    debugmode=true
+    ;;
+  t) # or testing
+    debugmode=true
+    ;;
  esac
 done
 
@@ -55,7 +61,7 @@ twilightbegin=$(printf "%04d" `php $homepath/twilight.php | cut -d ' ' -f 1 | aw
 twilightend=$(printf "%04d" `php $homepath/twilight.php | cut -d ' ' -f 2 | awk '{print $1 + 0}'`)
 
 ## FOR TESTING PURPOSES
-if $testmode ; then # Run only when not testing
+if $debugmode ; then # Run only when not testing
   echo "$homepath"
   echo "$tmppath"
   echo "$inpathtoday"
@@ -81,10 +87,12 @@ endtime=$(date -Iminutes -d "$endtime") || exit -1
 d="$starttime"
 count=0
 while [ "$d" != "$endtime" ]; do
-    new=$(printf "%04d.jpg" $count) # 04 pads to length of 3 max 9999 images
-    ln -s $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg $tmppath/$new
+    if [ -f $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg ]; then
+        new=$(printf "%04d.jpg" $count) # 04 pads to length of 3 max 9999 images
+        ln -s $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg $tmppath/$new
+        let count=count+1
+    fi
     d=$(date -Iminutes -d "$d + 1 minute")
-    let count=count+1
 done
 
 # Create timelapse movie in appropriate location

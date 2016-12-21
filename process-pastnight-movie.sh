@@ -21,13 +21,13 @@ while getopts ":hdt:" flag
 do
  case $flag in
   h)
-    echo "help";
+    echo "help"
     ;;
   d) # developing
-    debugmode=true;
+    debugmode=true
     ;;
-  t)
-    timestamp=$OPTARG;
+  t) # use timestamp given as argument
+    timestamp=$OPTARG
     ;;
  esac
 done
@@ -91,10 +91,12 @@ endtime=$(date -Iminutes -d "$endtime") || exit -1
 d="$starttime"
 count=0
 while [ "$d" != "$endtime" ]; do
-    new=$(printf "%04d.jpg" $count) # 04 pads to length of 3 max 9999 images
-    ln -s $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg $tmppath/$new
+    if [ -f $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg ]; then
+        new=$(printf "%04d.jpg" $count) # 04 pads to length of 3 max 9999 images
+        ln -s $homepath/Documents/sky/$(date -d "$d" +%Y/%m/%d/%H%M).jpg $tmppath/$new
+        let count=count+1
+    fi
     d=$(date -Iminutes -d "$d + 1 minute")
-    let count=count+1
 done
 
 # Create timelapse movie in appropriate location
