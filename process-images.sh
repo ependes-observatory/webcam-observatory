@@ -89,7 +89,7 @@ done
 # 2.1 First rescale image and copy it
 convert "$homepath/allskycam/temp_$hm.jpg" \
   -resize 704x535\! \
-  -gravity South -crop 510x510+5+0\! \
+  -gravity South -crop 510x510+10+0\! \
   -bordercolor "#272528" -border 95x5 \
   -pointsize 18 -fill white \
   -gravity North -annotate 0 "N" \
